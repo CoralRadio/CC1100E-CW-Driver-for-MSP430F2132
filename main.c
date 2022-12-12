@@ -1,8 +1,7 @@
 
 #include "msp430x21x2.h"
-#include "CCxxx0.h"
+#include "CC1100E.h"
 
-//#define MSP430_CC2500
 
 #define COUNT               10
 #define TIME_COUNT          500
@@ -136,159 +135,51 @@ void halSpiStrobe(unsigned char strobe)
   while(!(IFG2&UCB0RXIFG));
   P3OUT |= 0x01;                 //Disable CC2500;
 }
-#ifdef CC2500
-void halRfWirteRfSettings_CC2500(void)
-{
-   halSpiWriteReg(CCxxx0_FREQ2,    0x5D);	
-   //---------------------------------------------------------------------------
-   //halSpiWriteReg(CCxxx0_FREQ1,    0xa7);    //2434.999847Mhz	//
-   //halSpiWriteReg(CCxxx0_FREQ0,    0x62);
-   //---------------------------------------------------------------------------
-   halSpiWriteReg(CCxxx0_FREQ1,    0x89);    //2431.999847Mhz	//
-   halSpiWriteReg(CCxxx0_FREQ0,    0xd8);
-   //---------------------------------------------------------------------------
-   halSpiWriteReg(CCxxx0_PKTLEN,   0xFF);			//1
-   halSpiWriteReg(CCxxx0_FIFOTHR,  0x0f);
-   halSpiWriteReg(CCxxx0_PKTCTRL1, 0x04);			//2     
-   halSpiWriteReg(CCxxx0_PKTCTRL0, 0x05);			//3
-	halSpiWriteReg(CCxxx0_FSCTRL1,  0x0B);			//4
-	halSpiWriteReg(CCxxx0_FSCTRL0,  0x00);			//5
-	halSpiWriteReg(CCxxx0_MDMCFG4,  0x78);   		//
-	halSpiWriteReg(CCxxx0_MDMCFG3,  0x93);			//8
-	halSpiWriteReg(CCxxx0_MDMCFG2,  0x93);			//9
-  	halSpiWriteReg(CCxxx0_MDMCFG1,  0x22);			//10
-  	halSpiWriteReg(CCxxx0_MDMCFG0,  0xF8);			//11	
-  	halSpiWriteReg(CCxxx0_CHANNR,   0x0A);			//6
-	halSpiWriteReg(CCxxx0_DEVIATN,  0x44);			//12
-	halSpiWriteReg(CCxxx0_FREND0,   0x10);
-	halSpiWriteReg(CCxxx0_FREND1,   0x56);
 
-    halSpiWriteReg(CCxxx0_MCSM2 ,   0x07); //CCA enbale
-    halSpiWriteReg(CCxxx0_MCSM1 ,   0x30); //0x30 CCA enbale
-
-    halSpiWriteReg(CCxxx0_MCSM0 ,   0x18); //
-    halSpiWriteReg(CCxxx0_FOCCFG,   0x16);			//16
-    halSpiWriteReg(CCxxx0_BSCFG,    0x6C);			//17
-	halSpiWriteReg(CCxxx0_AGCCTRL2, 0x43);			//18
-    halSpiWriteReg(CCxxx0_AGCCTRL1, 0x40);			//19
-    halSpiWriteReg(CCxxx0_AGCCTRL0, 0x91);			//20
-    halSpiWriteReg(CCxxx0_FSCAL3,   0xA9);			//23
-    halSpiWriteReg(CCxxx0_FSCAL2,   0x0A);			//24
-    halSpiWriteReg(CCxxx0_FSCAL1,   0x00);			//25
-    halSpiWriteReg(CCxxx0_FSCAL0,   0x11);			//26
-    halSpiWriteReg(CCxxx0_FSTEST,   0x59);			//27
-    halSpiWriteReg(CCxxx0_TEST2,    0x88);			//30
-    halSpiWriteReg(CCxxx0_TEST1,    0x31);			//31
-    halSpiWriteReg(CCxxx0_TEST0,    0x0B);			//32
-
-    halSpiWriteReg(CCxxx0_IOCFG2,  0x0B);
-    halSpiWriteReg(CCxxx0_IOCFG0,  0x06);
-}
-#elif defined CC1101
-void halRfWirteRfSettings_CC1101(void) //433.9MHZ
-{
-   //     halSpiWriteReg(CCxxx0_FREQ2,    0x5D);	
-   //---------------------------------------------------------------------------
-   //halSpiWriteReg(CCxxx0_FREQ1,    0xa7);    //2434.999847Mhz	//
-   //halSpiWriteReg(CCxxx0_FREQ0,    0x62);
-   //---------------------------------------------------------------------------
-  // halSpiWriteReg(CCxxx0_FREQ1,    0x89);    //2431.999847Mhz	//
-   //halSpiWriteReg(CCxxx0_FREQ0,    0xd8);
-   //---------------------------------------------------------------------------
-     halSpiWriteReg(CCxxx0_FREQ2,    0x10);
-     halSpiWriteReg(CCxxx0_FREQ1,    0xB0);
-     halSpiWriteReg(CCxxx0_FREQ0,    0x71);
-   //===========================================================================
-       halSpiWriteReg(CCxxx0_PKTLEN,   0xFF);			//1
-       halSpiWriteReg(CCxxx0_FIFOTHR,  0x0f);
-       halSpiWriteReg(CCxxx0_PKTCTRL1, 0x04);			//2     
-        halSpiWriteReg(CCxxx0_PKTCTRL0, 0x05);			//3
-	halSpiWriteReg(CCxxx0_FSCTRL1,  0x0B);			//4
-	halSpiWriteReg(CCxxx0_FSCTRL0,  0x00);			//5
-	halSpiWriteReg(CCxxx0_MDMCFG4,  0x7c);   		//
-	halSpiWriteReg(CCxxx0_MDMCFG3,  0x93);			//8
-	halSpiWriteReg(CCxxx0_MDMCFG2,  0x93);			//9
-  	halSpiWriteReg(CCxxx0_MDMCFG1,  0x22);			//10
-  	halSpiWriteReg(CCxxx0_MDMCFG0,  0xF8);			//11	
-  	halSpiWriteReg(CCxxx0_CHANNR,   0x00);			//6
-	halSpiWriteReg(CCxxx0_DEVIATN,  0x44);			//12
-	halSpiWriteReg(CCxxx0_FREND0,   0x10);
-	halSpiWriteReg(CCxxx0_FREND1,   0x56);
-
-    halSpiWriteReg(CCxxx0_MCSM2 ,   0x07); //CCA enbale
-    halSpiWriteReg(CCxxx0_MCSM1 ,   0x30); //0x30 CCA enbale
-
-    halSpiWriteReg(CCxxx0_MCSM0 ,   0x18); //
-    halSpiWriteReg(CCxxx0_FOCCFG,   0x16);			//16
-    halSpiWriteReg(CCxxx0_BSCFG,    0x6C);			//17
-	halSpiWriteReg(CCxxx0_AGCCTRL2, 0x43);			//18
-    halSpiWriteReg(CCxxx0_AGCCTRL1, 0x40);			//19
-    halSpiWriteReg(CCxxx0_AGCCTRL0, 0x91);			//20
-    halSpiWriteReg(CCxxx0_FSCAL3,   0xA9);			//23
-    halSpiWriteReg(CCxxx0_FSCAL2,   0x0A);			//24
-    halSpiWriteReg(CCxxx0_FSCAL1,   0x00);			//25
-    halSpiWriteReg(CCxxx0_FSCAL0,   0x11);			//26
-    halSpiWriteReg(CCxxx0_FSTEST,   0x59);			//27
-    halSpiWriteReg(CCxxx0_TEST2,    0x88);			//30
-    halSpiWriteReg(CCxxx0_TEST1,    0x31);			//31
-    halSpiWriteReg(CCxxx0_TEST0,    0x0B);			//32
-
-    halSpiWriteReg(CCxxx0_IOCFG2,  0x0B);
-    halSpiWriteReg(CCxxx0_IOCFG0,  0x06);
-}
-#elif defined CC1100E
 void halRfWirteRfSettings_CC1100E(void)  
 {
-   //     halSpiWriteReg(CCxxx0_FREQ2,    0x5D);	
-   //---------------------------------------------------------------------------
-   //halSpiWriteReg(CCxxx0_FREQ1,    0xa7);    //2434.999847Mhz	//
-   //halSpiWriteReg(CCxxx0_FREQ0,    0x62);
-   //---------------------------------------------------------------------------
-  // halSpiWriteReg(CCxxx0_FREQ1,    0x89);    //2431.999847Mhz	//
-   //halSpiWriteReg(CCxxx0_FREQ0,    0xd8);
-   //---------------------------------------------------------------------------
-     halSpiWriteReg(CCxxx0_FREQ2,    0x12);  //490MHZ
-     halSpiWriteReg(CCxxx0_FREQ1,    0xD8);
-     halSpiWriteReg(CCxxx0_FREQ0,    0x9D);
-   //===========================================================================
-       halSpiWriteReg(CCxxx0_PKTLEN,   0xFF);			//1
-       halSpiWriteReg(CCxxx0_FIFOTHR,  0x0f);
-       halSpiWriteReg(CCxxx0_PKTCTRL1, 0x04);			//2     
-        halSpiWriteReg(CCxxx0_PKTCTRL0, 0x05);			//3
-	halSpiWriteReg(CCxxx0_FSCTRL1,  0x0B);			//4
-	halSpiWriteReg(CCxxx0_FSCTRL0,  0x00);			//5
-	halSpiWriteReg(CCxxx0_MDMCFG4,  0xFA);   		//
-	halSpiWriteReg(CCxxx0_MDMCFG3,  0x93);			//8
-	halSpiWriteReg(CCxxx0_MDMCFG2,  0x93);			//9
-  	halSpiWriteReg(CCxxx0_MDMCFG1,  0x22);			//10
-  	halSpiWriteReg(CCxxx0_MDMCFG0,  0xF8);			//11	
-  	halSpiWriteReg(CCxxx0_CHANNR,   0x00);			//6
-	halSpiWriteReg(CCxxx0_DEVIATN,  0x35);			//12
-	halSpiWriteReg(CCxxx0_FREND0,   0x10);
-	halSpiWriteReg(CCxxx0_FREND1,   0x56);
+  halSpiWriteReg(CCxxx0_FREQ2,    0x12);  //490MHZ
+  halSpiWriteReg(CCxxx0_FREQ1,    0xD8);
+  halSpiWriteReg(CCxxx0_FREQ0,    0x9D);
+  //===========================================================================
+  halSpiWriteReg(CCxxx0_PKTLEN,   0xFF);			//1
+  halSpiWriteReg(CCxxx0_FIFOTHR,  0x0f);
+  halSpiWriteReg(CCxxx0_PKTCTRL1, 0x04);			//2     
+  halSpiWriteReg(CCxxx0_PKTCTRL0, 0x05);			//3
+  halSpiWriteReg(CCxxx0_FSCTRL1,  0x0B);			//4
+  halSpiWriteReg(CCxxx0_FSCTRL0,  0x00);			//5
+  halSpiWriteReg(CCxxx0_MDMCFG4,  0xFA);   		//
+  halSpiWriteReg(CCxxx0_MDMCFG3,  0x93);			//8
+  halSpiWriteReg(CCxxx0_MDMCFG2,  0x93);			//9
+  halSpiWriteReg(CCxxx0_MDMCFG1,  0x22);			//10
+  halSpiWriteReg(CCxxx0_MDMCFG0,  0xF8);			//11	
+  halSpiWriteReg(CCxxx0_CHANNR,   0x00);			//6
+  halSpiWriteReg(CCxxx0_DEVIATN,  0x35);			//12
+  halSpiWriteReg(CCxxx0_FREND0,   0x10);
+  halSpiWriteReg(CCxxx0_FREND1,   0x56);
 
-    halSpiWriteReg(CCxxx0_MCSM2 ,   0x07); //CCA enbale
-    halSpiWriteReg(CCxxx0_MCSM1 ,   0x30); //0x30 CCA enbale
+  halSpiWriteReg(CCxxx0_MCSM2 ,   0x07); //CCA enbale
+  halSpiWriteReg(CCxxx0_MCSM1 ,   0x30); //0x30 CCA enbale
 
-    halSpiWriteReg(CCxxx0_MCSM0 ,   0x18); //
-    halSpiWriteReg(CCxxx0_FOCCFG,   0x16);			//16
-    halSpiWriteReg(CCxxx0_BSCFG,    0x6C);			//17
-	halSpiWriteReg(CCxxx0_AGCCTRL2, 0x43);			//18
-    halSpiWriteReg(CCxxx0_AGCCTRL1, 0x40);			//19
-    halSpiWriteReg(CCxxx0_AGCCTRL0, 0x91);			//20
-    halSpiWriteReg(CCxxx0_FSCAL3,   0xA9);			//23
-    halSpiWriteReg(CCxxx0_FSCAL2,   0x0A);			//24
-    halSpiWriteReg(CCxxx0_FSCAL1,   0x00);			//25
-    halSpiWriteReg(CCxxx0_FSCAL0,   0x11);			//26
-    halSpiWriteReg(CCxxx0_FSTEST,   0x59);			//27
-    halSpiWriteReg(CCxxx0_TEST2,    0x88);			//30
-    halSpiWriteReg(CCxxx0_TEST1,    0x31);			//31
-    halSpiWriteReg(CCxxx0_TEST0,    0x0B);			//32
+  halSpiWriteReg(CCxxx0_MCSM0 ,   0x18); //
+  halSpiWriteReg(CCxxx0_FOCCFG,   0x16);			//16
+  halSpiWriteReg(CCxxx0_BSCFG,    0x6C);			//17
+  halSpiWriteReg(CCxxx0_AGCCTRL2, 0x43);			//18
+  halSpiWriteReg(CCxxx0_AGCCTRL1, 0x40);			//19
+  halSpiWriteReg(CCxxx0_AGCCTRL0, 0x91);			//20
+  halSpiWriteReg(CCxxx0_FSCAL3,   0xA9);			//23
+  halSpiWriteReg(CCxxx0_FSCAL2,   0x0A);			//24
+  halSpiWriteReg(CCxxx0_FSCAL1,   0x00);			//25
+  halSpiWriteReg(CCxxx0_FSCAL0,   0x11);			//26
+  halSpiWriteReg(CCxxx0_FSTEST,   0x59);			//27
+  halSpiWriteReg(CCxxx0_TEST2,    0x88);			//30
+  halSpiWriteReg(CCxxx0_TEST1,    0x31);			//31
+  halSpiWriteReg(CCxxx0_TEST0,    0x0B);			//32
 
-    halSpiWriteReg(CCxxx0_IOCFG2,  0x0B);
-    halSpiWriteReg(CCxxx0_IOCFG0,  0x06);
+  halSpiWriteReg(CCxxx0_IOCFG2,  0x0B);
+  halSpiWriteReg(CCxxx0_IOCFG0,  0x06);
 }
-#endif
+
 void POWER_UP_RESET(void)
 {
   P3OUT |= 0x01;
@@ -336,14 +227,13 @@ main( void )
   char txBuffer[40] = {0x27,0x55,0x7A,0x20,0x60,0xff,0xff,0xff,0xff,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x00,0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x00,0x01,0x02,0x03,0x04,0x05,0xff,0xff,0xff,0xff,0xb0};
   char txBuffer1[4] = {0x03,0x01,0x01,0x00};
   WDTCTL = WDTPW + WDTHOLD;
-  //-------------ADD外部32K晶振----------
   
   do
   {
      IFG1&=~OFIFG;
      for(i=250;i>0;i--);
   }
-   while((IFG1&OFIFG)==OFIFG);   //当OSCFault＝1 即晶振不起振则等待
+   while((IFG1&OFIFG)==OFIFG);   //OSCFault＝1 
   BCSCTL2 = SELM1 +SELM0 + SELS;
   
   //--------------------------
@@ -351,80 +241,15 @@ main( void )
   Setup_SPI();
   for(i = 100; i > 0;i--);
   POWER_UP_RESET();
-#ifdef CC2500
-  halRfWirteRfSettings_CC2500();
-  paTable[0] = 0xFF;  //CC2500 MAX OUTPUT POWER
-  SPIWriteBurstReg(CCxxx0_PATABLE,paTable,paTableLen);
-#elif defined CC1101
-  halRfWirteRfSettings_CC1101();
-  paTable[0] = 0xC0; //CC1101 MAX OUTPUT POWER
-  SPIWriteBurstReg(CCxxx0_PATABLE,paTable,paTableLen);
-#elif defined CC1100E
+
   halRfWirteRfSettings_CC1100E();
-  paTable[0] = 0x60;  //CC1100E MAX OUTPUT POWER  0xC2为最大功率10dbm,0x60为0dbm
+  paTable[0] = 0x60;  //CC1100E MAX OUTPUT POWER  0xC2
   SPIWriteBurstReg(CCxxx0_PATABLE,paTable,paTableLen);
-#endif  
+
   _EINT();
-  P2OUT |= 0x01;  //亮
-  for(k = COUNT;k > 0;k--)
-    {
-      halSpiStrobe(CCxxx0_SIDLE);
-      SPIWriteBurstReg(CCxxx0_TXFIFO,txBuffer,40);
-      halSpiStrobe(CCxxx0_STX);
-      while(!(P2IN & 0x02));
-      while(P2IN & 0x02);
-      for(j = 1; j > 0;j--)
-      {
-        for(i = TIME_COUNT; i > 0;i--);
-      }
-      //txBuffer[2]++;
-      //txBuffer[9]++;
-      //txBuffer[39]++;
-    }
-  for(k = COUNT;k > 0;k--)
-    {
-      halSpiStrobe(CCxxx0_SIDLE);
-      SPIWriteBurstReg(CCxxx0_TXFIFO,txBuffer1,4);
-      halSpiStrobe(CCxxx0_STX);
-      while(!(P2IN & 0x02));
-      while(P2IN & 0x02);
-      for(j = 1; j > 0;j--)
-      {
-        for(i = TIME_COUNT; i > 0;i--);
-      }
-    }
-  
-  Uart_SendString(txBuffer,40);
-  for(i = 0;i < 1000;i++);
-  while(data_flag)
-  {
-    P2OUT &= ~0x01;  //灭
-    IE2 &= ~UCA0RXIE;
-    data_flag = 0;
-    //halSpiStrobe(CCxxx0_SPWD);
-    halSpiStrobe(CCxxx0_SXOFF);
-    halSpiStrobe(CCxxx0_SPWD);
-    P3OUT |= 0x01;
-    for(i = 0;i < 10;i++);
-    LPM4;
-  }
-  
-}
+  P2OUT |= 0x01;  
 
-
-#pragma vector=USCIAB0RX_VECTOR
-__interrupt void USCIAB0_ISR(void)
-{
-  if(IFG2 & UCA0RXIFG)
-  {
-    data_buf[data_len] = UCA0RXBUF;
-    data_len++;
-    if(data_len == 40)
-    {
-      //Uart_SendString(data_buf,data_len);
-      data_flag = 1;
-      data_len = 0;
-    }
-    //IFG2 &= ~UCA0RXIFG;
-  }
+  halSpiStrobe(CCxxx0_SIDLE);
+  SPIWriteBurstReg(CCxxx0_TXFIFO,txBuffer,40);
+  halSpiStrobe(CCxxx0_STX);
 }
